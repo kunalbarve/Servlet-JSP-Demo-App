@@ -19,30 +19,8 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-default navbar-fixed-top topnav"
-		role="navigation">
-		<div class="topnav" style="backgroud-color: #888888;">
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1" style="margin-left: 50px;">
-				<ul class="nav navbar-nav">
-					<li><a href="#"><i class="glyphicon glyphicon-home"></i>
-							Home</a></li>
-
-					<!-- <li><a href="#"><i
-							class="glyphicon glyphicon-envelope"></i> Details</a></li> -->
-				</ul>
-
-				<ul class="nav navbar-nav navbar-right">
-					<li style="margin-top: 15px; margin-right: 90px; color: #500000;">Welcome
-						to my Demo Project</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-
-
-
+	<jsp:include page="header.jsp" />
+	
 	<form name="actionForm" data-toggle="validator" action="HomeServlet"
 		method="POST">
 		<input type="hidden" name="mode" value="saveData" /> <br> <br>
@@ -109,17 +87,8 @@
 
 		</div>
 	</form>
-
-	<nav class="navbar navbar-default navbar-fixed-bottom topnav"
-		role="navigation">
-		<div class="container topnav"
-			style="font-size: small; color: #500000; text-align: center;">
-			<BR>
-			<p>
-				<b>WARNING:</b> ALL RIGHTS ARE RESERVED @MohdBasheikh @2015.
-			</p>
-		</div>
-	</nav>
+	
+	<jsp:include page="footer.jsp" />
 
 </body>
 </html>

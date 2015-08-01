@@ -19,30 +19,7 @@
 
 </head>
 <body>
-
-	<nav class="navbar navbar-default navbar-fixed-top topnav"
-		role="navigation">
-		<div class="topnav" style="backgroud-color: #888888;">
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1" style="margin-left: 50px;">
-				<ul class="nav navbar-nav">
-					<li><a href="#" onclick="goHome();return false;"><i
-							class="glyphicon glyphicon-home"></i> Home</a></li>
-
-					<!-- <li><a href="#/document"><i
-							class="glyphicon glyphicon-envelope"></i> Details</a></li> -->
-				</ul>
-
-				<ul class="nav navbar-nav navbar-right">
-					<li style="margin-top: 15px; margin-right: 90px; color: #500000;">Welcome
-						to my Demo Project</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-
-
+	<jsp:include page="header.jsp" />
 
 	<form name="actionForm" data-toggle="validator" action="HomeServlet"
 		method="POST">
@@ -63,6 +40,7 @@
 								<th>Last Name</th>
 								<th>Email</th>
 								<th>Gender</th>
+								<th>Delete</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -72,10 +50,14 @@
 									<td>${user.lastName}</td>
 									<td>${user.email}</td>
 									<td><c:if test="${user.gender == 'M'}">
-											Male
-											</c:if> <c:if test="${user.gender == 'F'}">
-											Female
-											</c:if></td>
+										Male
+										</c:if> <c:if test="${user.gender == 'F'}">
+										Female
+										</c:if>
+									</td>
+									<td>
+										<button type="button" class="btn btn-warning" onclick="createRequest('/DemoProject/HomeServlet', {mode: 'deleteData', id: '${user.id}'}, 'post');">Delete</button>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -87,22 +69,33 @@
 		</div>
 	</form>
 
-	<nav class="navbar navbar-default navbar-fixed-bottom topnav"
-		role="navigation">
-		<div class="container topnav"
-			style="font-size: small; color: #500000; text-align: center;">
-			<BR>
-			<p>
-				<b>WARNING:</b> ALL RIGHTS ARE RESERVED @MohdBasheikh @2015.
-			</p>
-		</div>
-	</nav>
+	<jsp:include page="footer.jsp" />
 
 </body>
 
 <script type="text/javascript">
-	function goHome(){
-		window.location.replace("Home.jsp");
+	function createRequest(path, params, method) {
+	    method = method || "post"; // Set method to post by default if not specified.
+	    // The rest of this code assumes you are not using a library.
+	    // It can be made less wordy if you use one.
+	    var form = document.createElement("form");
+	    form.setAttribute("method", method);
+	    form.setAttribute("action", path);
+	    	
+	    for(var key in params) {
+	        if(params.hasOwnProperty(key)) {
+	            var hiddenField = document.createElement("input");
+	            hiddenField.setAttribute("type", "hidden");
+	            hiddenField.setAttribute("name", key);
+	            hiddenField.setAttribute("value", params[key]);
+	            form.appendChild(hiddenField);
+	         }
+	    }
+
+	    document.body.appendChild(form);
+	    form.submit();
 	}
+	
 </script>
+
 </html>

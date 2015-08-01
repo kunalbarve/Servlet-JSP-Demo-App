@@ -2,13 +2,15 @@ package demoProject;
 
 public class User {
 	
+	private String id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String gender;
 	
-	public User(String firstName, String lastName, String email, String gender) {
+	public User(String id, String firstName, String lastName, String email, String gender) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -39,7 +41,10 @@ public class User {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
-	
-
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 }
