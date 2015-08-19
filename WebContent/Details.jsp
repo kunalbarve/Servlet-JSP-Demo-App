@@ -3,20 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<meta http-equiv="Content-Type"
-	content="text/html; charset=windows-1256">
-<title>Details Page</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+	<title>Details Page</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<script src="js/utility.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<jsp:include page="header.jsp" />
@@ -56,6 +50,7 @@
 										</c:if>
 									</td>
 									<td>
+										<button type="button" class="btn btn-info" onclick="createRequest('/DemoProject/HomeServlet', {mode: 'updateData', id: '${user.id}'}, 'post');">Edit</button>
 										<button type="button" class="btn btn-warning" onclick="createRequest('/DemoProject/HomeServlet', {mode: 'deleteData', id: '${user.id}'}, 'post');">Delete</button>
 									</td>
 								</tr>
@@ -72,30 +67,4 @@
 	<jsp:include page="footer.jsp" />
 
 </body>
-
-<script type="text/javascript">
-	function createRequest(path, params, method) {
-	    method = method || "post"; // Set method to post by default if not specified.
-	    // The rest of this code assumes you are not using a library.
-	    // It can be made less wordy if you use one.
-	    var form = document.createElement("form");
-	    form.setAttribute("method", method);
-	    form.setAttribute("action", path);
-	    	
-	    for(var key in params) {
-	        if(params.hasOwnProperty(key)) {
-	            var hiddenField = document.createElement("input");
-	            hiddenField.setAttribute("type", "hidden");
-	            hiddenField.setAttribute("name", key);
-	            hiddenField.setAttribute("value", params[key]);
-	            form.appendChild(hiddenField);
-	         }
-	    }
-
-	    document.body.appendChild(form);
-	    form.submit();
-	}
-	
-</script>
-
 </html>

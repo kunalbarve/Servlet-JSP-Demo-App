@@ -2,13 +2,14 @@
 	pageEncoding="windows-1256"%>
 <html>
 <head>
-<meta http-equiv="Content-Type"
-	content="text/html; charset=windows-1256">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<meta http-equiv="Content-Type"
+		content="text/html; charset=windows-1256">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<script src="js/utility.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top topnav"
@@ -20,8 +21,8 @@
 					<li><a href="#" onclick="goHome();return false;"><i
 							class="glyphicon glyphicon-home"></i> Home</a></li>
 
-					<!-- <li><a href="#/document"><i
-							class="glyphicon glyphicon-envelope"></i> Details</a></li> -->
+					<li><a href="" onclick="createRequest('/DemoProject/HomeServlet', {mode: 'getUsersDetails'}, 'get'); return false;"><i
+							class="glyphicon glyphicon-envelope"></i> Details</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

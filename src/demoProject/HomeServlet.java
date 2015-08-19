@@ -1,7 +1,6 @@
 package demoProject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,12 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.UserDao;
+
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static List<User> userList = new ArrayList<User>();
-       
-    public HomeServlet() {
+	public HomeServlet() {
         super();
     }
 
@@ -29,30 +28,66 @@ public class HomeServlet extends HttpServlet {
 				saveData(request, response);
 			}else if(method.equalsIgnoreCase("deleteData")){
 				deleteUser(request, response);
+			}else if(method.equalsIgnoreCase("getUsersDetails")){
+				displayUserDetails(request, response);
+			}else if(method.equalsIgnoreCase("updateData")){
+				updateUser(request, response);
+			}else if(method.equalsIgnoreCase("saveUpdatedData")){
+				saveUpdatedData(request, response);
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 			
 	}
 	
-	private void deleteUser(HttpServletRequest request, HttpServletResponse response)throws Exception {
-		String userId = request.getParameter("id");
-		List<User> newList = new ArrayList<User>();
+	private void saveUpdatedData(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		String gender = request.getParameter("gender");
+		String id = request.getParameter("userId");
 		
-		for (User user : userList) {
-			if(!user.getId().equalsIgnoreCase(userId)){
-				newList.add(user);
-			}
+		User user = new User(id, firstName, lastName, email, gender);
+		UserDao.updateUser(user);
+		
+		List<User> userData = UserDao.getUserDetails();
+		
+		request.setAttribute("userData", userData);
+	    RequestDispatcher rd = getServletContext().getRequestDispatcher("/Details.jsp");
+	    rd.forward(request, response);
+	}
+
+	private void updateUser(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		String userId = request.getParameter("id");
+		User user = UserDao.getUser(userId);
+		
+		if(user != null){
+			request.setAttribute("userData", user);
+		}else{
+			request.setAttribute("userData", new User());
 		}
 		
-		userList = newList;
-		request.setAttribute("userData", userList);
-	    RequestDispatcher rd = getServletContext()
-	                               .getRequestDispatcher("/Details.jsp");
+		request.setAttribute("mode", "EDIT");
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/Home.jsp");
 	    rd.forward(request, response);
+	}
+
+	private void displayUserDetails(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		List<User> userData = UserDao.getUserDetails();
+		request.setAttribute("userData", userData);
+	    RequestDispatcher rd = getServletContext().getRequestDispatcher("/Details.jsp");
+	    rd.forward(request, response);
+	}
+
+	private void deleteUser(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		String userId = request.getParameter("id");
+		UserDao.deleteUser(userId);
 		
+		List<User> userData = UserDao.getUserDetails();
+		request.setAttribute("userData", userData);
+	    RequestDispatcher rd = getServletContext().getRequestDispatcher("/Details.jsp");
+	    rd.forward(request, response);
 	}
 
 	private void saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -63,11 +98,12 @@ public class HomeServlet extends HttpServlet {
 		String id = getUniqueId();
 		
 		User user = new User(id, firstName, lastName, email, gender);
-		userList.add(user);
+		UserDao.saveUserData(user);
 		
-		request.setAttribute("userData", userList);
-	    RequestDispatcher rd = getServletContext()
-	                               .getRequestDispatcher("/Details.jsp");
+		List<User> userData = UserDao.getUserDetails();
+		
+		request.setAttribute("userData", userData);
+	    RequestDispatcher rd = getServletContext().getRequestDispatcher("/Details.jsp");
 	    rd.forward(request, response);
 	}
 	
